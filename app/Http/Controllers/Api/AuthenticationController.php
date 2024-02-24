@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\SignUpRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -61,4 +62,15 @@ class AuthenticationController extends Controller
             'message' => 'created successfully',
         ], 201);
     }
+
+    public function updateProfile(ProfileRequest  $request){
+        $request=$request->all();
+        if(array_key_exists('password',$request)){
+            $request['password']= bcrypt($request['password']);
+        }
+        User::find(Auth::id())->update($request);
+        return response()->json('Your PROFILE has been updated successfully', 200);
+    }
+
+
 }

@@ -17,4 +17,12 @@ class Task extends Model
         'status'
      ];
 
+     public function assignedUser(){
+        return $this->belongsTo(User::class,"assigned_user_id");
+     }
+
+    public function creatorUser(){
+        return $this->belongsTo(User::class,"creator_user_id");
+     }
+
 }
