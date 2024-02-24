@@ -154,3 +154,5 @@ Stack trace:
 [24-Feb-2024 12:04:28 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 56627200 bytes) in C:\Apache\htdocs\task-management\app\Exceptions\Handler.php on line 48
 [24-Feb-2024 12:13:54 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 56627200 bytes) in C:\Apache\htdocs\task-management\app\Http\Middleware\CreatorTasksMiddleware.php on line 23
 [24-Feb-2024 12:14:09 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 56627200 bytes) in C:\Apache\htdocs\task-management\app\Http\Middleware\CreatorTasksMiddleware.php on line 23
+[24-Feb-2024 21:38:46 UTC] PHP Fatal error:  Maximum execution time of 60 seconds exceeded in C:\Apache\htdocs\task-management\vendor\symfony\mailer\Transport\Smtp\Stream\SocketStream.php on line 154
+[24-Feb-2024 21:39:50 UTC] PHP Fatal error:  Maximum execution time of 60 seconds exceeded in C:\Apache\htdocs\task-management\vendor\symfony\mailer\Transport\Smtp\Stream\SocketStream.php on line 154
