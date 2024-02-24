@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Auth;
 
-class CreateTaskRequest extends FormRequest
+class UpdateTaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,9 @@ class CreateTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' =>'required|max:150',
-            'description' =>'required|max:500',
+            'title' =>'sometimes|max:150',
+            'description' =>'sometimes|max:500',
+            'assigned_user_id' =>'sometimes|exists:users,id',
         ];
     }
     

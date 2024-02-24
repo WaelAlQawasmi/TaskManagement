@@ -2,16 +2,12 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Task;
 use App\Models\User;
 use Closure;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 
-class CreatorTasksMiddleware
+class AdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -19,16 +15,12 @@ class CreatorTasksMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
-    {  
-
-
-        $task =Task::findOrFail( $request->route('task'));
-        if (($request->user() && User::isAdmin())|| Auth::id() == $task->creator_user_id) {
+    {
+        if (($request->user() && User::isAdmin())) {
             return $next($request);
         }
         return response()->json([
-            'message' => 'UNAUTHORIZED !'
+            'message' => 'Unauthorized access !'
         ],Response::HTTP_UNAUTHORIZED );
-
     }
 }
