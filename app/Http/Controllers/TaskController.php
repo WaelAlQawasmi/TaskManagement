@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Mail\NotificationEmail;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
 {
@@ -44,9 +46,12 @@ class TaskController extends Controller
 
     public function AssignTask(Request $request, $task)
     {
+        
         $task = Task::findOrFail($task);
-        $task = User::findOrFail($request->assignedUserId);
+        $user =User::findOrFail($request->assignedUserId);
         $task->update(['assigned_user_id' => $request->assignedUserId]);
+        Mail::to( $task->assignedUser->email)->send(new NotificationEmail("Task assigned to you "," The task {$task->title}  has assigned to  you task  by \" {$task->creatorUser->name}\" "));
+
         return response()->json([
             'success' => true,
             'message' => ' Task Assigned successfully',
@@ -59,7 +64,10 @@ class TaskController extends Controller
     public function MarkTasksAsCompleted(Request $request, $task)
     {
         $task = Task::findOrFail($task);
+        
         $task->update(['status' => self::completedStatus,]);
+        Mail::to( $task->creatorUser->email)->send(new NotificationEmail("Completed Task","{$task->assignedUser->name}  has marked your task \"  $task->title \" as completed"));
+
         return response()->json([
             'success' => true,
             'message' => 'The task marked as completed successfully',
