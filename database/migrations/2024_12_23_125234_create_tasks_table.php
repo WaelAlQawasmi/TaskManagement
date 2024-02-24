@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('creator_user_id')->references('id')->on('users');
             $table->unsignedBigInteger('assigned_user_id')->nullable();
             $table->foreign('assigned_user_id')->references('id')->on('users');
-            $table->enum('status', ['pending', 'in_progress', 'completed'])->default('pending');
+            $table->enum('status', ['pending', 'completed'])->default('pending');
             $table->timestamps();
         });
     }

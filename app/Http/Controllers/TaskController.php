@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,9 +27,9 @@ class TaskController extends Controller
        return Task::paginate(15);
     }
 
-    public function AssignTask(Request $request){
-
-        $task =Task::find($request->taskId);
+    public function AssignTask(Request $request, $task){
+        $task =Task::findOrFail( $task);
+        $task =User::findOrFail($request->assignedUserId);
         $task->update(['assigned_user_id'=>$request->assignedUserId]); 
         return response()->json([
             'success' => true,
@@ -67,7 +69,7 @@ class TaskController extends Controller
      */
     public function show($taskId)
     {
-        Task::findOrFail($taskId);
+       return Task::findOrFail($taskId);
     }
 
     /**
@@ -81,9 +83,11 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,  $taskId)
+    public function update(UpdateTaskRequest $request,  $taskId)
     {
-        Task::findOrFail($taskId);
+       $task= Task::findOrFail($taskId);
+       $task->update($request->all());
+       return response()->json('The task has been updated successfully',200);
     }
 
     /**
@@ -92,7 +96,7 @@ class TaskController extends Controller
     public function destroy( $taskId)
     {
         Task::findOrFail($taskId)->delete();
-        return response()->json(null, 204);
+        return response()->json('The task has been deleted successfully', 204);
 
     }
 }

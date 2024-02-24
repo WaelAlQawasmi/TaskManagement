@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:api'])->group(function () {
     Route::resource('task', TaskController::class);
     Route::post('/logout', [AuthenticationController::class,'logout']);
-    Route::post('/assign-task', [AuthenticationController::class,'AssignTask'])->middleware('CreatorTasksMiddleware');
+    Route::post('/assign-task/{task}', [TaskController::class,'AssignTask'])->middleware('CreatorTasksMiddleware');
 });
 
 Route::post('/login', [AuthenticationController::class, 'login'])->name('login');
