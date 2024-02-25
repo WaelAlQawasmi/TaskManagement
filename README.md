@@ -1,69 +1,145 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Task Management Backend API Documentation
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This documentation outlines the API endpoints and usage for the Task Management backend.
 
-## About Laravel
+## Authentication
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Sign Up
 
-- /api/update-profile
-- /api/login
+- **Endpoint:** `/api/signup`
+- **Method:** POST
+- **Description:** Registers a new user.
+- **Request Body:**
+  - `email` (string, required): User's email address.
+  - `name` (string, required): User's name.
+  - `password` (string, required): User's password.
+- **Response:** Returns user data if successful.
 
-(https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Log In
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Endpoint:** `/api/login`
+- **Method:** POST
+- **Description:** Logs in a user.
+- **Request Body:**
+  - `email` (string, required): User's email address.
+  - `password` (string, required): User's password.
+- **Response:** Returns authentication token if successful.
 
-## Learning Laravel
+## Task Management
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Create Task
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **Endpoint:** `/api/task`
+- **Method:** POST
+- **Description:** Creates a new task.
+- **Request Body:**
+  - `title` (string, required): Task title.
+  - `description` (string, required): Task description.
+- **Authentication:** Required.
+- **Authorization:** All authenticated users can create tasks.
+- **Response:** Returns created task data.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Get All Tasks
 
-## Laravel Sponsors
+- **Endpoint:** `/api/task`
+- **Method:** GET
+- **Description:** Retrieves all tasks.
+- **Authentication:** Required.
+- **Authorization:** Requires admin role.
+- **Response:** Returns list of all tasks.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Get Specific Task
 
-### Premium Partners
+- **Endpoint:** `/api/task/{task}`
+- **Method:** GET
+- **Description:** Retrieves a specific task.
+- **Authentication:** Required.
+- **Authorization:** Authenticated user must be assigned to the task, or be the task creator, or have admin role.
+- **Response:** Returns specific task data.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Update Specific Task
 
-## Contributing
+- **Endpoint:** `/api/task/{task}`
+- **Method:** PUT
+- **Description:** Updates a specific task.
+- **Request Body:** Same as Create Task.
+- **Authentication:** Required.
+- **Authorization:** Authenticated user must be the task creator or have admin role.
+- **Response:** Returns updated task data.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Delete Specific Task
 
-## Code of Conduct
+- **Endpoint:** `/api/task/{task}`
+- **Method:** DELETE
+- **Description:** Deletes a specific task.
+- **Authentication:** Required.
+- **Authorization:** Authenticated user must be the task creator or have admin role.
+- **Response:** Returns success message upon deletion.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Mark Task as Completed
 
-## Security Vulnerabilities
+- **Endpoint:** `/api/mark-tasks-completed/{task}`
+- **Method:** POST
+- **Description:** Marks a specific task as completed and sends email notification to task creator.
+- **Authentication:** Required.
+- **Authorization:** Authenticated user must be assigned to the task.
+- **Response:** Returns success message.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Assign Task to User
 
-## License
+- **Endpoint:** `/api/assign-task/{task}`
+- **Method:** POST
+- **Description:** Assigns a task to a specific user and sends email notification to assigned user.
+- **Request Body:**
+  - `assignedUserId` (integer, required): ID of the user to assign the task to.
+- **Authentication:** Required.
+- **Authorization:** All authenticated users can assign tasks.
+- **Response:** Returns success message.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Filter Tasks
+
+- **Endpoint:** `/api/tasks-filter/{status}`
+- **Method:** GET
+- **Description:** Filters tasks based on status (pending or completed).
+- **Authentication:** Required.
+- **Authorization:** For logged-in user's tasks or all users' tasks based on status.
+- **Response:** Returns filtered tasks.
+
+## Other Endpoints
+
+### Log Viewer
+
+- **URL:** `/log-viewer`
+- **Description:** Access log viewer for admin users.
+
+## Setup
+
+- Clone the project 
+- > composer install --no-dev
+- > cp .env.example .env
+-  set the DB configuration in `.env` file
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_database_username
+DB_PASSWORD=your_database_password
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.sendgrid.net
+MAIL_PORT=587
+MAIL_USERNAME=apikey
+MAIL_PASSWORD=send-grid-token
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="username-send-grid"
+MAIL_FROM_NAME="${APP_NAME}"
+```
+- > php artisan key:generate
+- > php artisan migrate
+- >  php artisan migrate --seed
+- > php artisan passport:install
+
+## To run test 
+> php artisan test
+
