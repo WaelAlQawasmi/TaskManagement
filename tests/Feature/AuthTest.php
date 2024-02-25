@@ -27,13 +27,15 @@ class AuthTest extends TestCase
      */
     public function test_login_with_correct_credentials()
     {
-        $user = User::factory()->create([
+        $user = User::create([
+            'name'=>'test',
             'role_id'=>2,
+            'email'=>"qw@yui.com",
             'password' => bcrypt('password'), 
         ]);
 
         $response = $this->post('/api/login', [
-            'email' => $user->email,
+            'email' => 'qw@yui.com',
             'password' => 'password',
         ]);
 

@@ -125,7 +125,7 @@ class TaskController extends Controller
      */
     public function store(CreateTaskRequest $request)
     {
-        Task::create([
+        $task=Task::create([
             'title' => $request->title,
             'description' => $request->description,
             'creator_user_id' => Auth::id(),
@@ -133,6 +133,7 @@ class TaskController extends Controller
         ]);
 
         return response()->json([
+            'task_id'=> $task->id,
             'success' => true,
             'message' => ' Task created successfully',
         ], 201);
