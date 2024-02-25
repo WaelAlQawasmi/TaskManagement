@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'CreatorTasksMiddleware' =>  \App\Http\Middleware\CreatorTasksMiddleware::class,
         'AdminMiddleware' =>  \App\Http\Middleware\AdminMiddleware::class,
         'AssignedMiddleware' =>  \App\Http\Middleware\AssignedMiddleware::class,
+        'AssignedOrCreatorTaskMiddleware' =>  \App\Http\Middleware\AssignedOrCreatorTaskMiddleware::class,
     ];
 }

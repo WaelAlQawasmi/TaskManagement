@@ -22,6 +22,7 @@ class TaskController extends Controller
         $this->middleware('auth:api')->except(['getMyTasks']);
         $this->middleware('CreatorTasksMiddleware')->only(["update", "destroy", "AssignTask"]);
         $this->middleware('AdminMiddleware')->only(["index"]);
+        $this->middleware('AssignedOrCreatorTaskMiddleware')->only(["show"]);
     }
 
     /**
