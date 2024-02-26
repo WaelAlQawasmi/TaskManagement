@@ -5,7 +5,7 @@ This documentation outlines the API endpoints and usage for the Task Management 
 ## Authentication
 
 ### Sign Up
-
+![](./task-img/shignup.png)
 - **Endpoint:** `/api/signup`
 - **Method:** POST
 - **Description:** Registers a new user.
@@ -16,7 +16,7 @@ This documentation outlines the API endpoints and usage for the Task Management 
 - **Response:** Returns user data if successful.
 
 ### Log In
-
+![](./task-img/login.png)
 - **Endpoint:** `/api/login`
 - **Method:** POST
 - **Description:** Logs in a user.
@@ -24,10 +24,12 @@ This documentation outlines the API endpoints and usage for the Task Management 
   - `email` (string, required): User's email address.
   - `password` (string, required): User's password.
 - **Response:** Returns authentication token if successful.
+![](./task-img/Unauthenticated.png)
 
 ## Task Management
 
 ### Create Task
+![](./task-img/crete-t.png)
 
 - **Endpoint:** `/api/task`
 - **Method:** POST
@@ -47,6 +49,7 @@ This documentation outlines the API endpoints and usage for the Task Management 
 - **Authentication:** Required.
 - **Authorization:** Requires admin role.
 - **Response:** Returns list of all tasks.
+
 
 ### Get Specific Task
 
@@ -75,6 +78,7 @@ This documentation outlines the API endpoints and usage for the Task Management 
 - **Authentication:** Required.
 - **Authorization:** Authenticated user must be the task creator or have admin role.
 - **Response:** Returns success message upon deletion.
+![](./task-img/deleted.png)
 
 ### Mark Task as Completed
 
@@ -84,6 +88,7 @@ This documentation outlines the API endpoints and usage for the Task Management 
 - **Authentication:** Required.
 - **Authorization:** Authenticated user must be assigned to the task.
 - **Response:** Returns success message.
+![](./task-img/completed.png)
 
 ### Assign Task to User
 
@@ -95,6 +100,7 @@ This documentation outlines the API endpoints and usage for the Task Management 
 - **Authentication:** Required.
 - **Authorization:** All authenticated users can assign tasks.
 - **Response:** Returns success message.
+![alt text](./task-img/mail.png)
 
 ### Filter Tasks
 
@@ -111,6 +117,22 @@ This documentation outlines the API endpoints and usage for the Task Management 
 
 - **URL:** `/log-viewer`
 - **Description:** Access log viewer for admin users.
+- **Admin cradentaial :**  
+  - >admin@test.com 
+
+  - > 123456
+
+  ![](./task-img/logs.png)
+### My tasks
+
+- **URL:** `/my-tasks`
+- **Description:** Access log viewer for admin users.
+- **Admin cradentaial :**  
+  - >admin@test.com 
+
+  - > 123456
+
+   ![](./task-img/my-task.png)
 
 ## Setup
 
@@ -118,23 +140,23 @@ This documentation outlines the API endpoints and usage for the Task Management 
 - > composer install --no-dev
 - > cp .env.example .env
 -  set the DB configuration in `.env` file
-```
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=your_database_name
-DB_USERNAME=your_database_username
-DB_PASSWORD=your_database_password
+   ```
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=your_database_name
+    DB_USERNAME=your_database_username
+    DB_PASSWORD=your_database_password
 
-MAIL_MAILER=smtp
-MAIL_HOST=smtp.sendgrid.net
-MAIL_PORT=587
-MAIL_USERNAME=apikey
-MAIL_PASSWORD=send-grid-token
-MAIL_ENCRYPTION=null
-MAIL_FROM_ADDRESS="username-send-grid"
-MAIL_FROM_NAME="${APP_NAME}"
-```
+    MAIL_MAILER=smtp
+    MAIL_HOST=smtp.sendgrid.net
+    MAIL_PORT=587
+    MAIL_USERNAME=apikey
+    MAIL_PASSWORD=send-grid-token
+    MAIL_ENCRYPTION=null
+    MAIL_FROM_ADDRESS="username-send-grid"
+    MAIL_FROM_NAME="${APP_NAME}"
+   ```
 - > php artisan key:generate
 - > php artisan migrate
 - >  php artisan migrate --seed
@@ -142,4 +164,5 @@ MAIL_FROM_NAME="${APP_NAME}"
 
 ## To run test 
 > php artisan test
+![alt text](./task-img/tests.png)
 

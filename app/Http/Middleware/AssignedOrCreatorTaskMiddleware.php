@@ -3,8 +3,8 @@
 namespace App\Http\Middleware;
 
 use App\Models\Task;
+use App\Models\User as ModelsUser;
 use Closure;
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +20,7 @@ class AssignedOrCreatorTaskMiddleware
     {
         
             $task =Task::findOrFail( $request->route('task'));
-            if (($request->user() && User::isAdmin())|| Auth::id() == $task->assigned_user_id ||Auth::id() == $task->creator_user_id) {
+            if (($request->user() && ModelsUser::isAdmin())|| Auth::id() == $task->assigned_user_id ||Auth::id() == $task->creator_user_id) {
                 return $next($request);
             }
             return response()->json([

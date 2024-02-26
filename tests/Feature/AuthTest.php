@@ -3,9 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Testing\Fluent\AssertableJson;
+
 use Tests\TestCase;
 
 class AuthTest extends TestCase
@@ -27,21 +25,12 @@ class AuthTest extends TestCase
      */
     public function test_login_with_correct_credentials()
     {
-        $user = User::create([
-            'name'=>'test',
-            'role_id'=>2,
-            'email'=>"qw@yui.com",
-            'password' => bcrypt('password'), 
-        ]);
-
         $response = $this->post('/api/login', [
-            'email' => 'qw@yui.com',
-            'password' => 'password',
+            'email' => 'admin@test.com',
+            'password' => '123456',
         ]);
-
         $response->assertStatus(200);
-        $this->assertAuthenticated();
-        $user->delete();
+        $this->assertAuthenticated(); 
     } 
     /**
      *  test login with  invalid password.
